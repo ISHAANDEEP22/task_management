@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:task_management/Task management/newUI.dart';
+import 'package:task_management/Task%20management/addTask.dart';
 import 'package:task_management/Auth/login.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:task_management/Task%20management/editTask.dart';
+import 'package:intl/intl.dart';
 
 class Home_Screen extends StatefulWidget {
   const Home_Screen({super.key});
@@ -20,6 +22,19 @@ class _Home_ScreenState extends State<Home_Screen> {
       appBar: AppBar(
         title: const Text('Task Management Tool'),
         centerTitle: true,
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 10.0),
+            child: IconButton(
+              icon: Icon(
+                Icons.logout,
+                color: Colors.red,
+                size: 40,
+              ),
+              onPressed: () => doUserLogout(context),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: Visibility(
         visible: show,
@@ -54,28 +69,6 @@ class _Home_ScreenState extends State<Home_Screen> {
           },
           child: Column(
             children: [
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  height: 80,
-                  child: TextButton(
-                    style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(
-                        Colors.red, // Set text color to red
-                      ),
-                    ),
-                    onPressed: () => doUserLogout(context),
-                    child: Text(
-                      'Logout',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold, // Make text bold
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-
-              // Stream_note(false),
               Expanded(
                   child: FutureBuilder<List<ParseObject>>(
                       future: getTodo(),
@@ -109,44 +102,83 @@ class _Home_ScreenState extends State<Home_Screen> {
                                     final varTodo = snapshot.data![index];
                                     final varTitle =
                                         varTodo.get<String>('title')!;
+                                    final varSubtitle =
+                                        varTodo.get<String>('subtitle')!;
+                                    final dueDate =
+                                        varTodo.get<DateTime>('selectedDate')!;
                                     final varDone = varTodo.get<bool>('done')!;
                                     //*************************************
 
                                     return ListTile(
-                                      title: Text(varTitle),
-                                      leading: CircleAvatar(
-                                        child: Icon(varDone
-                                            ? Icons.check
-                                            : Icons.error),
-                                        backgroundColor: varDone
-                                            ? Colors.green
-                                            : Colors.blue,
-                                        foregroundColor: Colors.white,
+                                      title: Text(
+                                        varTitle,
+                                        style: TextStyle(
+                                          fontSize:
+                                              20, // Adjust the font size as needed
+                                          fontWeight: FontWeight
+                                              .bold, // Optionally, set the font weight
+                                        ),
+                                      ),
+                                      subtitle: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            varSubtitle,
+                                            style: TextStyle(
+                                              fontSize:
+                                                  18, // Adjust the font size as needed
+                                            ),
+                                          ),
+                                          Text(
+                                            'Due Date: ${DateFormat('dd/MM/yyyy').format(dueDate)}',
+                                            style: TextStyle(
+                                              fontSize:
+                                                  16, // Adjust the font size as needed
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      leading: Transform.scale(
+                                        scale:
+                                            2.0, // Adjust scale factor as needed
+                                        child: Checkbox(
+                                          value: varDone,
+                                          onChanged: (value) async {
+                                            await updateTodo(
+                                              varTodo.objectId!,
+                                              value!,
+                                            );
+                                            setState(() {
+                                              // Refresh UI
+                                            });
+                                          },
+                                          checkColor: Colors
+                                              .white, // Set the color of the checked checkbox
+                                          activeColor: Colors
+                                              .green, // Set the color of the unchecked checkbox
+                                        ),
                                       ),
                                       trailing: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Checkbox(
-                                              value: varDone,
-                                              onChanged: (value) async {
-                                                await updateTodo(
-                                                    varTodo.objectId!, value!);
-                                                setState(() {
-                                                  //Refresh UI
-                                                });
-                                              }),
                                           IconButton(
-                                            icon: Icon(
-                                              Icons.delete,
-                                              color: Colors.blue,
-                                            ),
+                                            icon: Icon(Icons.edit,
+                                                color: Colors.orange, size: 30),
+                                            onPressed: () async {
+                                              await editTodo(varTodo, context);
+                                            },
+                                          ),
+                                          IconButton(
+                                            icon: Icon(Icons.delete,
+                                                color: Colors.black, size: 30),
                                             onPressed: () async {
                                               await deleteTodo(
                                                   varTodo.objectId!);
                                               setState(() {
                                                 final snackBar = SnackBar(
                                                   content:
-                                                      Text("Todo deleted!"),
+                                                      Text("Task deleted!"),
                                                   duration:
                                                       Duration(seconds: 2),
                                                 );
@@ -163,17 +195,6 @@ class _Home_ScreenState extends State<Home_Screen> {
                             }
                         }
                       })),
-              Center(
-                child: Text(
-                  'Completed',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              // Stream_note(true),
             ],
           ),
         ),
@@ -219,4 +240,10 @@ Future<void> updateTodo(String id, bool done) async {
 Future<void> deleteTodo(String id) async {
   var todo = ParseObject('Todo')..objectId = id;
   await todo.delete();
+}
+
+Future<void> editTodo(Object todo, context) async {
+  Navigator.of(context).push(MaterialPageRoute(
+    builder: (context) => Edit_Screen(todo),
+  ));
 }

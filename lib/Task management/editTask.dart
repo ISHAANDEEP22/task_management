@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:task_management/model/notes_model.dart';
 
-class Add_creen extends StatefulWidget {
-  const Add_creen({super.key});
+class Edit_Screen extends StatefulWidget {
+  Note _todo;
+  Edit_Screen(this._todo, {super.key});
 
   @override
-  State<Add_creen> createState() => _Add_creenState();
+  State<Edit_Screen> createState() => _Edit_ScreenState();
 }
 
-class _Add_creenState extends State<Add_creen> {
-  final title = TextEditingController();
-  final subtitle = TextEditingController();
-  final todoController = TextEditingController();
-
+class _Edit_ScreenState extends State<Edit_Screen> {
+  TextEditingController? title;
+  TextEditingController? subtitle;
+  TextEditingController? selectedDate;
   FocusNode _focusNode1 = FocusNode();
   FocusNode _focusNode2 = FocusNode();
   int indexx = 0;
-  DateTime selectedDate = DateTime.now();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    title = TextEditingController(text: widget._todo.title);
+    subtitle = TextEditingController(text: widget._todo.subtitle);
+    selectedDate = TextEditingController(text: widget._todo.selectedDate);
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -55,19 +63,21 @@ class _Add_creenState extends State<Add_creen> {
             if (title.text.isNotEmpty) {
               // Check if the title text field is not empty
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text("Task created"),
+                content: Text("Task edited"),
                 duration: Duration(seconds: 3),
               ));
               await saveTodo(title.text, subtitle.text,
                   selectedDate); // Call saveTodo with text values
-              setState(() {
-                title.clear(); // Clear both text fields after saving todo
-                subtitle.clear();
-              });
+              // to redirect
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("Title Cannot be Empty"),
+                duration: Duration(seconds: 5),
+              ));
             }
           },
           child: Text(
-            'Add Task',
+            'Edit Task',
             style: TextStyle(
               color: Colors.white, // Set the text color here
             ),
@@ -153,7 +163,7 @@ class _Add_creenState extends State<Add_creen> {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
-                color: Colors.red,
+                color: Colors.blue,
                 width: 2.0,
               ),
             ),
@@ -186,7 +196,7 @@ class _Add_creenState extends State<Add_creen> {
           Row(
             children: [
               Text(
-                'Date:',
+                'Due Date:',
                 style: TextStyle(fontSize: 18),
               ),
               SizedBox(width: 10), // Add spacing between text and date

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:task_management/Auth/registeration.dart';
 import 'package:task_management/Task management/home.dart';
-import 'package:task_management/Task management/newTodo.dart';
+import 'package:task_management/Task%20management/task_dashboard.dart';
 
 class LoginPage extends StatefulWidget {
   @override
