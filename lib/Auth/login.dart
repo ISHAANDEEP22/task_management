@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:task_management/Auth/registeration.dart';
 import 'package:task_management/Task management/home.dart';
+import 'package:task_management/Task management/newTodo.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -148,7 +149,8 @@ class _LoginPageState extends State<LoginPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => Home()), // Navigate to RegisterPage
+                      builder: (context) =>
+                          Home_Screen()), // Navigate to RegisterPage
                 );
               },
             ),
