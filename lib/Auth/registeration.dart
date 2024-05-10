@@ -3,6 +3,8 @@ import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:task_management/Auth/login.dart';
 
 class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
+
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
@@ -25,24 +27,24 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Container(
+                SizedBox(
                   height: 300,
                   child: Image.network(
                       'https://thumbs.dreamstime.com/z/cartoon-character-calm-businessman-colorful-vector-illustration-business-sitting-calmly-his-desk-doing-yoga-37465327.jpg?ct=jpeg'),
                 ),
-                Center(
-                  child: const Text('Designed by Ashiana_boy',
+                const Center(
+                  child: Text('Designed by Ashiana_boy',
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
-                Center(
-                  child: const Text('User Registration',
+                const Center(
+                  child: Text('User Registration',
                       style: TextStyle(fontSize: 16)),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 TextField(
@@ -50,12 +52,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   keyboardType: TextInputType.text,
                   textCapitalization: TextCapitalization.none,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black)),
                       labelText: 'Username'),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 TextField(
@@ -63,12 +65,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   keyboardType: TextInputType.emailAddress,
                   textCapitalization: TextCapitalization.none,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black)),
                       labelText: 'E-mail'),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 TextField(
@@ -77,15 +79,15 @@ class _RegisterPageState extends State<RegisterPage> {
                   keyboardType: TextInputType.text,
                   textCapitalization: TextCapitalization.none,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black)),
                       labelText: 'Password'),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
-                Container(
+                SizedBox(
                   height: 50,
                   child: TextButton(
                     style: ButtonStyle(
@@ -116,14 +118,14 @@ class _RegisterPageState extends State<RegisterPage> {
           title: const Text("Success!"),
           content: const Text("User was successfully created!"),
           actions: <Widget>[
-            new TextButton(
+            TextButton(
               child: const Text("OK to login"),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          LoginPage()), // Navigate to RegisterPage
+                          const LoginPage()), // Navigate to RegisterPage
                 );
               },
             ),
@@ -141,7 +143,7 @@ class _RegisterPageState extends State<RegisterPage> {
           title: const Text("Error!"),
           content: Text(errorMessage),
           actions: <Widget>[
-            new TextButton(
+            TextButton(
               child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();

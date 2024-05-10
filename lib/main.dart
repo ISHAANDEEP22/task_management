@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
-import 'package:task_management/Auth/registeration.dart';
 import 'package:task_management/Auth/login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final keyApplicationId = 'UKESklDXLaTqRauW6H7QYnqtHfl7eXqAZc54UcCX';
-  final keyClientKey = 'bwDDxz0h4NQeDvCGuMR1vsPp5qZHHz5KFSvkHpm9';
-  final keyParseServerUrl = 'https://parseapi.back4app.com';
+  const keyApplicationId = 'UKESklDXLaTqRauW6H7QYnqtHfl7eXqAZc54UcCX';
+  const keyClientKey = 'bwDDxz0h4NQeDvCGuMR1vsPp5qZHHz5KFSvkHpm9';
+  const keyParseServerUrl = 'https://parseapi.back4app.com';
 
   await Parse().initialize(keyApplicationId, keyParseServerUrl,
       clientKey: keyClientKey, autoSendSessionId: true);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LoginPage(),
+      home: const LoginPage(),
     );
   }
 }

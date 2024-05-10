@@ -24,9 +24,9 @@ class _Home_ScreenState extends State<Home_Screen> {
         centerTitle: true,
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 10.0),
+            padding: const EdgeInsets.only(right: 10.0),
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.logout,
                 color: Colors.red,
                 size: 40,
@@ -41,11 +41,11 @@ class _Home_ScreenState extends State<Home_Screen> {
         child: FloatingActionButton(
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => Add_creen(),
+              builder: (context) => const Add_creen(),
             ));
           },
           backgroundColor: Colors.blue, // Button background color
-          child: Icon(
+          child: const Icon(
             Icons.add,
             size: 30,
             color: Colors.white, // Icon color
@@ -76,25 +76,25 @@ class _Home_ScreenState extends State<Home_Screen> {
                         switch (snapshot.connectionState) {
                           case ConnectionState.none:
                           case ConnectionState.waiting:
-                            return Center(
-                              child: Container(
+                            return const Center(
+                              child: SizedBox(
                                   width: 100,
                                   height: 100,
                                   child: CircularProgressIndicator()),
                             );
                           default:
                             if (snapshot.hasError) {
-                              return Center(
+                              return const Center(
                                 child: Text("Error..."),
                               );
                             }
                             if (!snapshot.hasData) {
-                              return Center(
+                              return const Center(
                                 child: Text("No Data..."),
                               );
                             } else {
                               return ListView.builder(
-                                  padding: EdgeInsets.only(top: 10.0),
+                                  padding: const EdgeInsets.only(top: 10.0),
                                   itemCount: snapshot.data!.length,
                                   itemBuilder: (context, index) {
                                     //*************************************
@@ -107,12 +107,13 @@ class _Home_ScreenState extends State<Home_Screen> {
                                     final dueDate =
                                         varTodo.get<DateTime>('selectedDate')!;
                                     final varDone = varTodo.get<bool>('done')!;
+
                                     //*************************************
 
                                     return ListTile(
                                       title: Text(
                                         varTitle,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize:
                                               20, // Adjust the font size as needed
                                           fontWeight: FontWeight
@@ -125,14 +126,14 @@ class _Home_ScreenState extends State<Home_Screen> {
                                         children: [
                                           Text(
                                             varSubtitle,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize:
                                                   18, // Adjust the font size as needed
                                             ),
                                           ),
                                           Text(
                                             'Due Date: ${DateFormat('dd/MM/yyyy').format(dueDate)}',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize:
                                                   16, // Adjust the font size as needed
                                             ),
@@ -163,20 +164,21 @@ class _Home_ScreenState extends State<Home_Screen> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           IconButton(
-                                            icon: Icon(Icons.edit,
+                                            icon: const Icon(Icons.edit,
                                                 color: Colors.orange, size: 30),
                                             onPressed: () async {
-                                              await editTodo(varTodo, context);
+                                              await editTodo(
+                                                  varTodo.objectId!, context);
                                             },
                                           ),
                                           IconButton(
-                                            icon: Icon(Icons.delete,
+                                            icon: const Icon(Icons.delete,
                                                 color: Colors.black, size: 30),
                                             onPressed: () async {
                                               await deleteTodo(
                                                   varTodo.objectId!);
                                               setState(() {
-                                                final snackBar = SnackBar(
+                                                const snackBar = SnackBar(
                                                   content:
                                                       Text("Task deleted!"),
                                                   duration:
@@ -207,7 +209,7 @@ doUserLogout(BuildContext context) async {
   Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => LoginPage()), // Navigate to RegisterPage
+        builder: (context) => const LoginPage()), // Navigate to RegisterPage
   );
 }
 
@@ -242,8 +244,8 @@ Future<void> deleteTodo(String id) async {
   await todo.delete();
 }
 
-Future<void> editTodo(Object todo, context) async {
+Future<void> editTodo(String id, context) async {
   Navigator.of(context).push(MaterialPageRoute(
-    builder: (context) => Edit_Screen(todo),
+    builder: (context) => Edit_Screen(id),
   ));
 }

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -12,7 +14,7 @@ class _HomeState extends State<Home> {
 
   void addToDo() async {
     if (todoController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Empty title"),
         duration: Duration(seconds: 2),
       ));
@@ -28,13 +30,13 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Task Management Tool"),
+        title: const Text("Task Management Tool"),
         centerTitle: true,
       ),
       body: Column(
         children: <Widget>[
           Container(
-              padding: EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
+              padding: const EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -42,7 +44,7 @@ class _HomeState extends State<Home> {
                       autocorrect: true,
                       textCapitalization: TextCapitalization.sentences,
                       controller: todoController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           labelText: "New todo",
                           labelStyle: TextStyle(color: Colors.blueAccent)),
                     ),
@@ -53,7 +55,7 @@ class _HomeState extends State<Home> {
                         backgroundColor: Colors.blue,
                       ),
                       onPressed: addToDo,
-                      child: Text(
+                      child: const Text(
                         "ADD",
                         style: TextStyle(
                           color: Colors
@@ -69,25 +71,25 @@ class _HomeState extends State<Home> {
                     switch (snapshot.connectionState) {
                       case ConnectionState.none:
                       case ConnectionState.waiting:
-                        return Center(
-                          child: Container(
+                        return const Center(
+                          child: SizedBox(
                               width: 100,
                               height: 100,
                               child: CircularProgressIndicator()),
                         );
                       default:
                         if (snapshot.hasError) {
-                          return Center(
+                          return const Center(
                             child: Text("Error..."),
                           );
                         }
                         if (!snapshot.hasData) {
-                          return Center(
+                          return const Center(
                             child: Text("No Data..."),
                           );
                         } else {
                           return ListView.builder(
-                              padding: EdgeInsets.only(top: 10.0),
+                              padding: const EdgeInsets.only(top: 10.0),
                               itemCount: snapshot.data!.length,
                               itemBuilder: (context, index) {
                                 //*************************************
@@ -100,11 +102,11 @@ class _HomeState extends State<Home> {
                                 return ListTile(
                                   title: Text(varTitle),
                                   leading: CircleAvatar(
-                                    child: Icon(
-                                        varDone ? Icons.check : Icons.error),
                                     backgroundColor:
                                         varDone ? Colors.green : Colors.blue,
                                     foregroundColor: Colors.white,
+                                    child: Icon(
+                                        varDone ? Icons.check : Icons.error),
                                   ),
                                   trailing: Row(
                                     mainAxisSize: MainAxisSize.min,
@@ -119,14 +121,14 @@ class _HomeState extends State<Home> {
                                             });
                                           }),
                                       IconButton(
-                                        icon: Icon(
+                                        icon: const Icon(
                                           Icons.delete,
                                           color: Colors.blue,
                                         ),
                                         onPressed: () async {
                                           await deleteTodo(varTodo.objectId!);
                                           setState(() {
-                                            final snackBar = SnackBar(
+                                            const snackBar = SnackBar(
                                               content: Text("Todo deleted!"),
                                               duration: Duration(seconds: 2),
                                             );

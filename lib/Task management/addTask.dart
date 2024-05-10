@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:task_management/Task%20management/task_dashboard.dart';
 
 class Add_creen extends StatefulWidget {
   const Add_creen({super.key});
@@ -13,8 +14,8 @@ class _Add_creenState extends State<Add_creen> {
   final subtitle = TextEditingController();
   final todoController = TextEditingController();
 
-  FocusNode _focusNode1 = FocusNode();
-  FocusNode _focusNode2 = FocusNode();
+  final FocusNode _focusNode1 = FocusNode();
+  final FocusNode _focusNode2 = FocusNode();
   int indexx = 0;
   DateTime selectedDate = DateTime.now();
 
@@ -30,11 +31,11 @@ class _Add_creenState extends State<Add_creen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             title_widgets(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             subtite_wedgite(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             dateSelecter(context),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             button()
           ],
         ),
@@ -49,12 +50,12 @@ class _Add_creenState extends State<Add_creen> {
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue,
-            minimumSize: Size(170, 48),
+            minimumSize: const Size(170, 48),
           ),
           onPressed: () async {
             if (title.text.isNotEmpty) {
               // Check if the title text field is not empty
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 content: Text("Task created"),
                 duration: Duration(seconds: 3),
               ));
@@ -65,13 +66,13 @@ class _Add_creenState extends State<Add_creen> {
                 subtitle.clear();
               });
             } else {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 content: Text("Title Cannot be Empty"),
                 duration: Duration(seconds: 5),
               ));
             }
           },
-          child: Text(
+          child: const Text(
             'Add Task',
             style: TextStyle(
               color: Colors.white, // Set the text color here
@@ -81,12 +82,17 @@ class _Add_creenState extends State<Add_creen> {
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.red,
-            minimumSize: Size(170, 48),
+            minimumSize: const Size(170, 48),
           ),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      const Home_Screen()), // Navigate to RegisterPage
+            );
           },
-          child: Text(
+          child: const Text(
             'Cancel',
             style: TextStyle(
               color: Colors.white, // Set the text color here
@@ -108,21 +114,21 @@ class _Add_creenState extends State<Add_creen> {
         child: TextField(
           controller: title,
           focusNode: _focusNode1,
-          style: TextStyle(fontSize: 18, color: Colors.black),
+          style: const TextStyle(fontSize: 18, color: Colors.black),
           decoration: InputDecoration(
               contentPadding:
-                  EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               hintText: 'title',
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(
+                borderSide: const BorderSide(
                   color: Color(0xffc5c5c5),
                   width: 2.0,
                 ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(
+                borderSide: const BorderSide(
                   color: Colors.blue,
                   width: 2.0,
                 ),
@@ -144,20 +150,21 @@ class _Add_creenState extends State<Add_creen> {
           maxLines: 3,
           controller: subtitle,
           focusNode: _focusNode2,
-          style: TextStyle(fontSize: 18, color: Colors.black),
+          style: const TextStyle(fontSize: 18, color: Colors.black),
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             hintText: 'subtitle',
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: Color(0xffc5c5c5),
                 width: 2.0,
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: Colors.blue,
                 width: 2.0,
               ),
@@ -169,7 +176,7 @@ class _Add_creenState extends State<Add_creen> {
   }
 
   Widget dateSelecter(BuildContext context) {
-    Future<void> _selectDate() async {
+    Future<void> selectDate() async {
       final DateTime? pickedDate = await showDatePicker(
         context: context,
         initialDate: selectedDate,
@@ -184,26 +191,28 @@ class _Add_creenState extends State<Add_creen> {
     }
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20), // Add horizontal padding
+      padding:
+          const EdgeInsets.symmetric(horizontal: 20), // Add horizontal padding
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Text(
+              const Text(
                 'Due Date:',
                 style: TextStyle(fontSize: 18),
               ),
-              SizedBox(width: 10), // Add spacing between text and date
+              const SizedBox(width: 10), // Add spacing between text and date
               Text(
                 '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              SizedBox(width: 20), // Add spacing between text and date
+              const SizedBox(width: 20), // Add spacing between text and date
 
               ElevatedButton(
-                onPressed: () => _selectDate(),
-                child: Text('Change Date'),
+                onPressed: () => selectDate(),
+                child: const Text('Change Date'),
               ),
             ],
           ),

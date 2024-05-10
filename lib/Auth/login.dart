@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:task_management/Auth/registeration.dart';
-import 'package:task_management/Task management/home.dart';
 import 'package:task_management/Task%20management/task_dashboard.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -27,24 +28,24 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Container(
+                SizedBox(
                   height: 300,
                   child: Image.network(
                       'https://thumbs.dreamstime.com/z/cartoon-character-calm-businessman-colorful-vector-illustration-business-sitting-calmly-his-desk-doing-yoga-37465327.jpg?ct=jpeg'),
                 ),
-                Center(
-                  child: const Text('Designed by Ashiana_boy',
+                const Center(
+                  child: Text('Designed by Ashiana_boy',
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
-                Center(
+                const Center(
                   child:
-                      const Text('User Login', style: TextStyle(fontSize: 16)),
+                      Text('User Login', style: TextStyle(fontSize: 16)),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 TextField(
@@ -53,12 +54,12 @@ class _LoginPageState extends State<LoginPage> {
                   keyboardType: TextInputType.text,
                   textCapitalization: TextCapitalization.none,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black)),
                       labelText: 'Username'),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 TextField(
@@ -68,21 +69,22 @@ class _LoginPageState extends State<LoginPage> {
                   keyboardType: TextInputType.text,
                   textCapitalization: TextCapitalization.none,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black)),
                       labelText: 'Password'),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
-                Container(
+                SizedBox(
                   height: 50,
                   child: TextButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors
                           .blue), // Change the color to your desired color
                     ),
+                    onPressed: isLoggedIn ? null : () => doUserLogin(),
                     child: const Text(
                       'Login',
                       style: TextStyle(
@@ -90,10 +92,9 @@ class _LoginPageState extends State<LoginPage> {
                             .white, // Change the text color to your desired color
                       ),
                     ),
-                    onPressed: isLoggedIn ? null : () => doUserLogin(),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 // Container(
@@ -106,19 +107,19 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'New to App?',
                       style: TextStyle(
                         fontSize: 16,
                         // Define your text style here
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       height: 50,
                       width: 120,
                       child: TextButton(
                         onPressed: () => redirectRegister(context),
-                        child: Text(
+                        child: const Text(
                           'Register Here',
                           style: TextStyle(
                             color: Colors.blue,
@@ -143,14 +144,14 @@ class _LoginPageState extends State<LoginPage> {
           title: const Text("Success!"),
           content: Text(message),
           actions: <Widget>[
-            new TextButton(
+            TextButton(
               child: const Text("OK"),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          Home_Screen()), // Navigate to RegisterPage
+                          const Home_Screen()), // Navigate to RegisterPage
                 );
               },
             ),
@@ -168,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
           title: const Text("Error!"),
           content: Text(errorMessage),
           actions: <Widget>[
-            new TextButton(
+            TextButton(
               child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -216,6 +217,6 @@ void redirectRegister(BuildContext context) async {
   Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => RegisterPage()), // Navigate to RegisterPage
+        builder: (context) => const RegisterPage()), // Navigate to RegisterPage
   );
 }
