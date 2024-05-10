@@ -111,7 +111,12 @@ class _Edit_ScreenState extends State<Edit_Screen> {
             minimumSize: const Size(170, 48),
           ),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      const Home_Screen()), // Navigate to RegisterPage
+            );
           },
           child: const Text(
             'Cancel',

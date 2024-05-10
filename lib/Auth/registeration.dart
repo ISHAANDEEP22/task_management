@@ -12,6 +12,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final controllerUsername = TextEditingController();
   final controllerPassword = TextEditingController();
+  final controllerConfirmPassword = TextEditingController();
   final controllerEmail = TextEditingController();
 
   @override
@@ -41,8 +42,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 16,
                 ),
                 const Center(
-                  child: Text('User Registration',
-                      style: TextStyle(fontSize: 16)),
+                  child:
+                      Text('User Registration', style: TextStyle(fontSize: 16)),
                 ),
                 const SizedBox(
                   height: 16,
@@ -87,6 +88,20 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 8,
                 ),
+                TextField(
+                  controller: controllerConfirmPassword,
+                  obscureText: true,
+                  keyboardType: TextInputType.text,
+                  textCapitalization: TextCapitalization.none,
+                  autocorrect: false,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black)),
+                      labelText: 'Confirm Password'),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
                 SizedBox(
                   height: 50,
                   child: TextButton(
@@ -119,7 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
           content: const Text("User was successfully created!"),
           actions: <Widget>[
             TextButton(
-              child: const Text("OK to login"),
+              child: const Text("Redirect to login"),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -159,12 +174,17 @@ class _RegisterPageState extends State<RegisterPage> {
     final username = controllerUsername.text.trim();
     final email = controllerEmail.text.trim();
     final password = controllerPassword.text.trim();
-    final user = ParseUser.createUser(username, password, email);
-    var response = await user.signUp();
-    if (response.success) {
-      showSuccess();
+    final confirmPassword = controllerConfirmPassword.text.trim();
+    if (password == confirmPassword) {
+      final user = ParseUser.createUser(username, password, email);
+      var response = await user.signUp();
+      if (response.success) {
+        showSuccess();
+      } else {
+        showError(response.error!.message);
+      }
     } else {
-      showError(response.error!.message);
+      showError("Password and Confirm Password must be match");
     }
   }
 }
