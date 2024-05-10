@@ -90,7 +90,15 @@ class _Home_ScreenState extends State<Home_Screen> {
                             }
                             if (!snapshot.hasData) {
                               return const Center(
-                                child: Text("No Data..."),
+                                child: Text(
+                                  "No Task",
+                                  style: TextStyle(
+                                    fontSize:
+                                        40, // Adjust the font size as needed
+                                    fontWeight: FontWeight
+                                        .bold, // Optionally, set the font weight
+                                  ),
+                                ),
                               );
                             } else {
                               return ListView.builder(
